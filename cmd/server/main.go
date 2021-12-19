@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/commenting-system/internal/database"
 	transportHTTP "github.com/commenting-system/internal/transport/http"
 )
 
@@ -13,6 +14,14 @@ type App struct{}
 //Run - sets up our app
 func (app *App) Run() error {
 	fmt.Println("Setting up our app")
+
+	var err error
+
+	_, err = database.NewDatabase()
+
+	if err != nil {
+		return err
+	}
 
 	handler := transportHTTP.NewHandler()
 
